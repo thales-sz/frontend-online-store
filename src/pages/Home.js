@@ -1,9 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Category from '../components/category';
 import { getCategories } from '../services/api';
 import './Home.css';
-import { Link } from 'react-router-dom';
-
 
 class Home extends React.Component {
   state = {
@@ -31,7 +30,12 @@ class Home extends React.Component {
         <div data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </div>
-        <Link to="/shoppingcart" data-testid="shopping-cart-button">Ir para o carrinho</Link>
+        <Link
+          to="/shoppingcart"
+          data-testid="shopping-cart-button"
+        >
+          Ir para o carrinho
+        </Link>
       </main>
     );
   }
