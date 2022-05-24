@@ -6,16 +6,27 @@ export async function getCategories() {
     const result = await responseAPI.json();
     return result;
   } catch (e) {
-    throw new Error('Failed to fetch');
+    throw new Error(e);
   }
 }
 
 export async function getProductsFromCategoryAndQuery(categoryId, query) {
-  try {
-    const responseAPI = await fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${categoryId}_ID&q=${query}`);
-    const result = await responseAPI.json();
-    return result;
-  } catch (error) {
-    throw new Error('Failed to fetch');
+  if (query === 'query') {
+    try {
+      const responseAPI = await fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${categoryId} `);
+      const result = await responseAPI.json();
+      return result;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
+  /* if (categoryId === null && query) {
+    try {
+      const responseAPI = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${query}`);
+      const result = await responseAPI.json();
+      return result;
+    } catch (error) {
+      throw new Error(error);
+    }
+  } */
 }

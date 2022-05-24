@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Category from '../components/category';
-import { getCategories } from '../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import './Home.css';
-// import { getProductsFromCategoryAndQuery } from '../services/api';
 
 class Home extends React.Component {
   state = {
@@ -31,6 +30,11 @@ class Home extends React.Component {
       .catch((error) => error);
   }
 
+  searchByCategory = async ({ target }) => {
+    const fetchCategory = await getProductsFromCategoryAndQuery(target.id, 'query');
+    this.setState({ productList: fetchCategory.results });
+  }
+
   render() {
     const { productList, categories } = this.state;
 
@@ -43,6 +47,7 @@ class Home extends React.Component {
             id={ item.id }
             name={ item.name }
             key={ item.id }
+            searchByCategory={ this.searchByCategory }
           />))}
         </section>
         <section data-testid="home-initial-message">
@@ -87,4 +92,3 @@ class Home extends React.Component {
 }
 
 export default Home;
-
