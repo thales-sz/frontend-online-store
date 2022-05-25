@@ -31,7 +31,7 @@ class Home extends React.Component {
   }
 
   searchByCategory = async ({ target }) => {
-    const fetchCategory = await getProductsFromCategoryAndQuery(target.id, 'query');
+    const fetchCategory = await getProductsFromCategoryAndQuery(target.id);
     this.setState({ productList: fetchCategory.results });
   }
 
