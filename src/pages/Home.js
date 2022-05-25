@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Category from '../components/category';
-import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
+import { getCategories } from '../services/api';
 import './Home.css';
 
 class Home extends React.Component {
   state = {
-    searchInput: '',
     categories: [],
-    productList: [],
   };
 
   componentDidMount = async () => {
@@ -16,64 +15,60 @@ class Home extends React.Component {
     this.setState({ categories });
   }
 
-  handleChange = (event) => {
-    this.setState({ searchInput: event.target.value });
-  }
-
-  searchItem = async () => {
-    const { searchInput } = this.state;
-    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${searchInput}`;
-
-    return fetch(url)
-      .then((resposta) => resposta.json())
-      .then((data) => this.setState({ productList: data.results }))
-      .catch((error) => error);
-  }
-
-  searchByCategory = async ({ target }) => {
-    const fetchCategory = await getProductsFromCategoryAndQuery(target.id);
-    this.setState({ productList: fetchCategory.results });
-  }
-
   render() {
-    const { productList, categories } = this.state;
+    const { addToCart,
+      searchByCategory,
+      handleChange,
+      searchItem,
+      productList } = this.props;
+    const { categories } = this.state;
 
     return (
       <main>
         <section className="category-container">
           Categorias:
           {' '}
-          {categories.map((item) => (<Category
-            id={ item.id }
-            name={ item.name }
-            key={ item.id }
-            searchByCategory={ this.searchByCategory }
-          />))}
+          {categories.map((item) => (
+            <Category
+              id={ item.id }
+              name={ item.name }
+              key={ item.id }
+              searchByCategory={ searchByCategory }
+            />))}
         </section>
         <section data-testid="home-initial-message">
           <section>
             <input
               type="text"
               data-testid="query-input"
-              onChange={ this.handleChange }
+              onChange={ handleChange }
             />
             <button
               type="button"
               data-testid="query-button"
-              onClick={ this.searchItem }
+              onClick={ searchItem }
             >
               Pesquisar
-
             </button>
           </section>
           {
             productList.length
               ? (
                 productList.map((item) => (
-                  <div key={ item.id } data-testid="product">
-                    <img src={ item.thumbnail } alt={ item.title } />
-                    <p>{item.title}</p>
-                    <p>{item.price}</p>
+                  <div key={ item.id } data-testid="product" id={ item.id }>
+                    <div className="product-info">
+                      <img src={ item.thumbnail } alt={ item.title } />
+                      <p>{item.title}</p>
+                      <p>{item.price}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={ addToCart }
+                      id={ item.id }
+                      data-testid="product-add-to-cart"
+                    >
+                      Adicionar ao carrinnho
+                    </button>
                   </div>
                 ))
               )
@@ -90,5 +85,13 @@ class Home extends React.Component {
     );
   }
 }
+
+Home.propTypes = {
+  addToCart: PropTypes.func,
+  searchByCategory: PropTypes.func,
+  handleChange: PropTypes.func,
+  searchItem: PropTypes.func,
+  productList: PropTypes.array,
+}.isRequired;
 
 export default Home;
