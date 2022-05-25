@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 class Category extends React.Component {
   render() {
-    const { id, name } = this.props;
+    const { id, name, searchByCategory } = this.props;
     return (
       <label htmlFor={ id } data-testid="category">
         <input
@@ -11,6 +11,7 @@ class Category extends React.Component {
           id={ id }
           name="name"
           value={ name }
+          onChange={ searchByCategory }
         />
         { name }
       </label>
