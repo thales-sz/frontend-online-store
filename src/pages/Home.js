@@ -59,11 +59,11 @@ class Home extends React.Component {
                   <div key={ item.id } data-testid="product" id={ item.id }>
                     <Link
                       to="/product-details"
-                      data-testid="product-detail-link"
                     >
                       <div
                         role="button"
                         className="product-info"
+                        data-testid="product-detail-link"
                         onClick={ seeProductDetails }
                         onKeyDown={ seeProductDetails }
                         tabIndex={ 0 }

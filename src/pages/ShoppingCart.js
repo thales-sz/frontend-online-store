@@ -9,7 +9,6 @@ class ShoppingCart extends React.Component {
       <section>
         {shopCartProducts.length ? (
           shopCartProducts.map((product) => {
-            console.log(product);
             let quantity = 0;
             const verifyProduct = product[0].title;
             shopCartProducts.forEach((prod) => {

@@ -39,19 +39,22 @@ class App extends React.Component {
     this.setState({ searchInput: event.target.value });
   }
 
-  // seeProductDetails = ({ target }) => {
-  // console.log(target.value);
-  // const { productList } = this.state;
-  // const detailedItem = productList.filter((item) => item.id === target.id);
-  // this.setState({ productDetails: detailedItem });
-  // };
+  seeProductDetails = ({ target }) => {
+    console.log(target.id);
+    const { productList } = this.state;
+    const detailedItem = productList.filter((item) => item.id === target.id);
+    this.setState({ productDetails: detailedItem });
+  };
 
   // A IDEIA DA FUNÇÃO ACIMA É SETAR O ESTADO PRODUCTDETAILS COM O OBJETO
   // CORRESPONDENTE AO PRODUTO CLICADO. DEPOIS, PASSAR ESSE ESTADO COMO
   // PROPS PARA A PAGINA PRODUCT DETAILS, PARA DESESTRUTUAR LÁ E MONTAR A EXIBIÇÃO DO PRODUTO
 
   render() {
-    const { shopCartProducts, productList, productDetails } = this.state;
+    const { shopCartProducts,
+      productList,
+      productDetails,
+    } = this.state;
     return (
       <BrowserRouter>
         <Switch>
