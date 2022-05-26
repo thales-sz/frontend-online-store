@@ -20,7 +20,8 @@ class Home extends React.Component {
       searchByCategory,
       handleChange,
       searchItem,
-      productList } = this.props;
+      productList,
+      seeProductDetails } = this.props;
     const { categories } = this.state;
 
     return (
@@ -56,11 +57,23 @@ class Home extends React.Component {
               ? (
                 productList.map((item) => (
                   <div key={ item.id } data-testid="product" id={ item.id }>
-                    <div className="product-info">
-                      <img src={ item.thumbnail } alt={ item.title } />
-                      <p>{item.title}</p>
-                      <p>{item.price}</p>
-                    </div>
+                    <Link
+                      to="/product-details"
+                    >
+                      <div
+                        role="button"
+                        className="product-info"
+                        data-testid="product-detail-link"
+                        onClick={ seeProductDetails }
+                        onKeyDown={ seeProductDetails }
+                        tabIndex={ 0 }
+                        id={ item.id }
+                      >
+                        <img src={ item.thumbnail } alt={ item.title } />
+                        <p>{item.title}</p>
+                        <p>{item.price}</p>
+                      </div>
+                    </Link>
                     <button
                       type="button"
                       onClick={ addToCart }
