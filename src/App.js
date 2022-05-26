@@ -81,7 +81,11 @@ class App extends React.Component {
           />
           <Route
             path="/product-details"
-            render={ () => <ProductDetails productDetails={ productDetails } /> }
+            render={ () => (
+              <ProductDetails
+                productDetails={ productDetails }
+                addToCart={ this.addToCart }
+              />) }
           />
         </Switch>
       </BrowserRouter>

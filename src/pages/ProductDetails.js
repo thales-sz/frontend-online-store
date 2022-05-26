@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class ProductDetails extends React.Component {
   render() {
-    const { productDetails } = this.props;
-    console.log(productDetails);
+    const { productDetails, addToCart } = this.props;
     const { id, price, title, thumbnail } = productDetails[0];
-    console.log(id, title, price, thumbnail);
+
     return (
       <section>
         <h2 data-testid="product-detail-name">{title}</h2>
@@ -15,7 +15,20 @@ class ProductDetails extends React.Component {
           <img src={ thumbnail } alt={ title } />
         </div>
         <div>
-          descriçao
+          <button
+            type="button"
+            onClick={ addToCart }
+            id={ id }
+            data-testid="product-detail-add-to-cart"
+          >
+            Adicionar ao carrinnho
+          </button>
+          <Link
+            to="/shoppingcart"
+            data-testid="shopping-cart-button"
+          >
+            Ir para o carrinho
+          </Link>
         </div>
       </section>
     );
