@@ -1,38 +1,108 @@
 import React from 'react';
 
 class ReviewForm extends React.Component {
+  state = {
+    emailInput: '',
+    rateInput: [],
+    reviewInput: '',
+    fullReview: [],
+  }
+
+  saveReview = () => {
+    const { fullReview, emailInput, rateInput, reviewInput } = this.state;
+    this.setState({() => {fullReview: [...{ emailInput, rateInput, reviewInput }]}});
+    localStorage.setItem('fullReview', JSON.stringify(fullReview));
+  }
+
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    });
+  }
+
+  renderReviews = () => {
+    const savedReviews = JSON.parse(localStorage.getItem('fullReview'));
+    if (savedReviews !== null) {
+      return (
+        <div>
+          {savedReviews.map((review) => (
+            <div key={ review.emailInput }>
+              <p>{review.emailInput}</p>
+              <p>{review.rateInput}</p>
+              <p>{review.reviewInput}</p>
+            </div>
+          ))}
+        </div>
+      );
+    }
+  }
+
   render() {
-    const rating1Star = 1;
-    const rating2Star = 2;
-    const rating3Star = 3;
-    const rating4Star = 4;
-    const rating5Star = 5;
+    const rating = [1, 2, 3, 4, 5];
     return (
       <>
         <section>
           <form>
-            <input type="email" data-testid="product-detail-email" />
-            <div data-testid={ `${rating1Star}-rating` } />
-            <div data-testid={ `${rating2Star}-rating` } />
-            <div data-testid={ `${rating3Star}-rating` } />
-            <div data-testid={ `${rating4Star}-rating` } />
-            <div data-testid={ `${rating5Star}-rating` } />
-            <textarea data-testid="product-detail-evaluation" />
+            <input
+              type="email"
+              name="emailInput"
+              data-testid="product-detail-email"
+              onChange={ this.handleChange }
+            />
+            <input
+              type="checkbox"
+              name="rateInput"
+              value={ rating[0] }
+              data-testid={ `${rating[0]}-rating` }
+              onChange={ this.handleChange }
+            />
+            <input
+              type="checkbox"
+              name="rateInput"
+              value={ rating[1] }
+              data-testid={ `${rating[1]}-rating` }
+              onChange={ this.handleChange }
+            />
+            <input
+              type="checkbox"
+              name="rateInput"
+              value={ rating[2] }
+              data-testid={ `${rating[2]}-rating` }
+              onChange={ this.handleChange }
+            />
+            <input
+              type="checkbox"
+              name="rateInput"
+              value={ rating[3] }
+              data-testid={ `${rating[3]}-rating` }
+              onChange={ this.handleChange }
+            />
+            <input
+              type="checkbox"
+              value="5"
+              name="rateInput"
+              value={ rating[4] }
+              data-testid={ `${rating[4]}-rating` }
+              onChange={ this.handleChange }
+            />
+            <textarea
+              name="reviewInput"
+              data-testid="product-detail-evaluation"
+              onChange={ this.handleChange }
+            />
             <button
               type="button"
               data-testid="submit-review-btn"
+              name="reviewInput"
+              onClick={ this.saveReview }
             >
               Enviar avaliação
             </button>
           </form>
         </section>
         <section>
-          <p>AQUI VAI O EMAIL</p>
-          <div>AQU VAI A ESTRELA DA AVALIALÇÃO</div>
-          <p>AQUI VAI O TEXTO DA AVAILIAÇÃO</p>
-          {/* O COMPONENTE ACIMA,
-          QUE REPLICA A AVALIAÇÃO,
-          TEM QUE SER REDENRIZADO DINAMICAMENTE */}
+          { this.renderReviews }
         </section>
       </>
     );
