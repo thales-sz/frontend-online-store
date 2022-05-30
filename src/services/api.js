@@ -2,7 +2,21 @@
 
 export async function getCategories() {
   try {
-    const responseAPI = await fetch('https://api.mercadolibre.com/sites/MLB/categories');
+    const responseAPI = await fetch(
+      'https://api.mercadolibre.com/sites/MLB/categories',
+    );
+    const result = await responseAPI.json();
+    return result;
+  } catch (e) {
+    throw new Error(e);
+  }
+}
+
+export async function getProductById(categoryId) {
+  try {
+    const responseAPI = await fetch(
+      `https://api.mercadolibre.com/items/${categoryId}`,
+    );
     const result = await responseAPI.json();
     return result;
   } catch (e) {
@@ -13,7 +27,9 @@ export async function getCategories() {
 export async function getProductsFromCategoryAndQuery(categoryId, query) {
   if (categoryId && !query) {
     try {
-      const responseAPI = await fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${categoryId} `);
+      const responseAPI = await fetch(
+        `https://api.mercadolibre.com/sites/MLB/search?category=${categoryId} `,
+      );
       const result = await responseAPI.json();
       return result;
     } catch (error) {
@@ -22,7 +38,9 @@ export async function getProductsFromCategoryAndQuery(categoryId, query) {
   }
   if (!categoryId && query) {
     try {
-      const responseAPI = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${query}`);
+      const responseAPI = await fetch(
+        `https://api.mercadolibre.com/sites/MLB/search?q=${query}`,
+      );
       const result = await responseAPI.json();
       return result;
     } catch (error) {
@@ -31,7 +49,9 @@ export async function getProductsFromCategoryAndQuery(categoryId, query) {
   }
   if (categoryId && query) {
     try {
-      const responseAPI = await fetch(`https://api.mercadolibre.com/sites/MLB/search?category=${categoryId}&q=${query}}`);
+      const responseAPI = await fetch(
+        `https://api.mercadolibre.com/sites/MLB/search?category=${categoryId}&q=${query}}`,
+      );
       const result = await responseAPI.json();
       return result;
     } catch (error) {
