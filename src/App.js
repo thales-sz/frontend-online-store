@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
-import { getProductsFromCategoryAndQuery } from './services/api';
+import { getProductsFromCategoryAndQuery, getProductById } from './services/api';
 import './App.css';
 import ShoppingCart from './pages/ShoppingCart';
 import ProductDetails from './pages/ProductDetails';
@@ -14,9 +14,24 @@ class App extends React.Component {
     productDetails: [],
   };
 
-  addToCart = ({ target }) => {
-    const { productList } = this.state;
-    const selectedItem = productList.filter((item) => item.id === target.id);
+  checkItem = async ({ target }) => { // essa função checa se o item já está no carrinho se já tiver aumenta a quantidade e caso não tenha chama a addToCart.
+    const itemID = target.parentElement.id;
+    const { shopCartProducts } = this.state;
+    const selectedItem = await getProductById(itemID);
+    console.log(selectedItem);
+    selectedItem.quantity = 1;
+    const itemPosition = shopCartProducts.findIndex(
+      (item) => item.id === selectedItem.id,
+    );
+    const magicNumber = -1;
+    if (itemPosition > magicNumber) {
+      shopCartProducts[itemPosition].quantity += 1;
+    } else {
+      this.addToCart(selectedItem);
+    }
+  }
+
+  addToCart = (selectedItem) => { // adiciona o novo carrinho
     this.setState((prev) => ({
       shopCartProducts: [...prev.shopCartProducts, selectedItem] }));
   };
@@ -63,11 +78,12 @@ class App extends React.Component {
             path="/"
             render={ () => (
               <Home
-                addToCart={ this.addToCart }
+                checkItem={ this.checkItem }
                 searchItem={ this.searchItem }
                 handleChange={ this.handleChange }
                 searchByCategory={ this.searchByCategory }
                 productList={ productList }
+                shopCartProducts={ shopCartProducts }
                 seeProductDetails={ this.seeProductDetails }
               />) }
           />
@@ -84,7 +100,7 @@ class App extends React.Component {
             render={ () => (
               <ProductDetails
                 productDetails={ productDetails }
-                addToCart={ this.addToCart }
+                checkItem={ this.checkItem }
               />) }
           />
         </Switch>
