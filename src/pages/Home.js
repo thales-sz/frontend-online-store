@@ -16,7 +16,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { addToCart,
+    const { checkItem,
       searchByCategory,
       handleChange,
       searchItem,
@@ -77,7 +77,7 @@ class Home extends React.Component {
                     </Link>
                     <button
                       type="button"
-                      onClick={ addToCart }
+                      onClick={ checkItem }
                       id={ item.id }
                       data-testid="product-add-to-cart"
                     >

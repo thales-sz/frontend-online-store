@@ -15,7 +15,6 @@ class App extends React.Component {
   };
 
   addToCart = ({ target }) => {
-    console.log('adicionou');
     const { productList } = this.state;
     const selectedItem = productList.filter((item) => item.id === target.id);
     this.setState((prev) => ({
