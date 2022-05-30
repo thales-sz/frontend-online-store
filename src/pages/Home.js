@@ -16,7 +16,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { checkItem,
+    const { addToCart,
       searchByCategory,
       handleChange,
       searchItem,
@@ -77,7 +77,7 @@ class Home extends React.Component {
                     </Link>
                     <button
                       type="button"
-                      onClick={ checkItem }
+                      onClick={ addToCart }
                       id={ item.id }
                       data-testid="product-add-to-cart"
                     >
@@ -101,7 +101,7 @@ class Home extends React.Component {
 }
 
 Home.propTypes = {
-  checkItem: PropTypes.func,
+  addToCart: PropTypes.func,
   searchByCategory: PropTypes.func,
   handleChange: PropTypes.func,
   searchItem: PropTypes.func,
