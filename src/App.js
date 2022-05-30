@@ -15,6 +15,7 @@ class App extends React.Component {
   };
 
   addToCart = ({ target }) => {
+    console.log('adicionou');
     const { productList } = this.state;
     const selectedItem = productList.filter((item) => item.id === target.id);
     this.setState((prev) => ({
@@ -40,15 +41,10 @@ class App extends React.Component {
   }
 
   seeProductDetails = ({ target }) => {
-    console.log(target.id);
     const { productList } = this.state;
     const detailedItem = productList.filter((item) => item.id === target.id);
     this.setState({ productDetails: detailedItem });
   };
-
-  // A IDEIA DA FUNÇÃO ACIMA É SETAR O ESTADO PRODUCTDETAILS COM O OBJETO
-  // CORRESPONDENTE AO PRODUTO CLICADO. DEPOIS, PASSAR ESSE ESTADO COMO
-  // PROPS PARA A PAGINA PRODUCT DETAILS, PARA DESESTRUTUAR LÁ E MONTAR A EXIBIÇÃO DO PRODUTO
 
   render() {
     const { shopCartProducts,

@@ -21,7 +21,7 @@ class ProductDetails extends React.Component {
             id={ id }
             data-testid="product-detail-add-to-cart"
           >
-            Adicionar ao carrinnho
+            Adicionar ao carrinho
           </button>
           <Link
             to="/shoppingcart"

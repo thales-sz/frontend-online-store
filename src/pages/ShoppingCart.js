@@ -11,6 +11,7 @@ class ShoppingCart extends React.Component {
   componentDidMount = () => {
     const productList = [];
     const itemQuantity = [];
+    console.log(productList);
     const { shopCartProducts } = this.props;
     shopCartProducts.map((product, index) => {
       quantity = 0;
@@ -72,6 +73,7 @@ class ShoppingCart extends React.Component {
   render() {
     const { shopCartProducts } = this.props;
     const { productList } = this.state;
+    console.log(shopCartProducts, productList);
     return (
       <section>
         {shopCartProducts.length ? (
