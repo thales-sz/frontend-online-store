@@ -70,9 +70,9 @@ class Home extends React.Component {
                         tabIndex={ 0 }
                         id={ item.id }
                       >
-                        <img src={ item.thumbnail } alt={ item.title } />
-                        <p>{item.title}</p>
-                        <p>{item.price}</p>
+                        <img src={ item.thumbnail } alt={ item.title } id={ item.id } />
+                        <p id={ item.id }>{item.title}</p>
+                        <p id={ item.id }>{item.price}</p>
                       </div>
                     </Link>
                     <button
