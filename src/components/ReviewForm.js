@@ -5,7 +5,6 @@ const TWO = 2;
 const THREE = 3;
 const FOUR = 4;
 const FIVE = 5;
-const saveReview = [];
 
 class ReviewForm extends React.Component {
   state = {
@@ -16,10 +15,10 @@ class ReviewForm extends React.Component {
   }
 
   saveReview = () => {
-    const { emailInput, checked, reviewInput } = this.state;
-    saveReview.push({ emailInput, checked, reviewInput });
-    this.setState((prev) => ({ fullReview: [...prev.fullReview, saveReview] }));
-    localStorage.setItem('fullReview', JSON.stringify(saveReview));
+    const { emailInput, checked, reviewInput, fullReview } = this.state;
+    this.setState((prev) => (
+      { fullReview: [...prev.fullReview, { emailInput, checked, reviewInput }] }), () => (
+      localStorage.setItem('fullReview', JSON.stringify(fullReview))));
   }
 
   handleChange = ({ target }) => {
@@ -41,15 +40,9 @@ class ReviewForm extends React.Component {
     }
   }
 
-  //  renderReviews = () => {
-  //    const savedReviews = JSON.parse(localStorage.getItem('fullReview'));
-  //    return (
-  //    );
-  //  }
-
   render() {
     const rating = [ONE, TWO, THREE, FOUR, FIVE];
-    const { checked, fullReview, savedReviews } = this.state;
+    const { checked, fullReview } = this.state;
     return (
       <>
         <section>
@@ -117,23 +110,21 @@ class ReviewForm extends React.Component {
           </form>
         </section>
         <section>
-          { fullReview[0] ? (
-            <div>
-              {savedReviews.map((review) => (
-                <div key={ review.emailInput }>
-                  <p>{review.emailInput}</p>
-                  <p>
-                    {review.checked.map((star) => (
-                      <div key={ star }>
-                        <input type="checkbox" checked={ star } />
-                      </div>
-                    ))}
-                  </p>
-                  <p>{review.reviewInput}</p>
-                </div>
-              ))}
-            </div>
-          ) : null }
+          <div>
+            {fullReview.length > 0 && fullReview.map((review) => (
+              <div key={ review.emailInput }>
+                <p>{review.emailInput}</p>
+                <p>
+                  {review.checked.map((star, index) => (
+                    <div key={ star + index }>
+                      <input type="checkbox" checked={ star } />
+                    </div>
+                  ))}
+                </p>
+                <p>{review.reviewInput}</p>
+              </div>
+            ))}
+          </div>
         </section>
       </>
     );
