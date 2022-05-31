@@ -10,7 +10,8 @@ class ReviewForm extends React.Component {
 
   saveReview = () => {
     const { fullReview, emailInput, rateInput, reviewInput } = this.state;
-    this.setState({() => {fullReview: [...{ emailInput, rateInput, reviewInput }]}});
+    this.setState((prev) => ({
+      fullReview: [...prev.fullReview, emailInput, rateInput, reviewInput] }));
     localStorage.setItem('fullReview', JSON.stringify(fullReview));
   }
 
@@ -23,19 +24,17 @@ class ReviewForm extends React.Component {
 
   renderReviews = () => {
     const savedReviews = JSON.parse(localStorage.getItem('fullReview'));
-    if (savedReviews !== null) {
-      return (
-        <div>
-          {savedReviews.map((review) => (
-            <div key={ review.emailInput }>
-              <p>{review.emailInput}</p>
-              <p>{review.rateInput}</p>
-              <p>{review.reviewInput}</p>
-            </div>
-          ))}
-        </div>
-      );
-    }
+    return (
+      <div>
+        {savedReviews.map((review) => (
+          <div key={ review.emailInput }>
+            <p>{review.emailInput}</p>
+            <p>{review.rateInput}</p>
+            <p>{review.reviewInput}</p>
+          </div>
+        ))}
+      </div>
+    );
   }
 
   render() {
@@ -102,7 +101,7 @@ class ReviewForm extends React.Component {
           </form>
         </section>
         <section>
-          { this.renderReviews }
+          { localStorage.fullReview && this.renderReviews() }
         </section>
       </>
     );
